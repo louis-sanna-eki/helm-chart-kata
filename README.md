@@ -12,5 +12,30 @@ uvicorn main:app --reload
 
 With docker:
 
-docker build -t helm-app .
-docker run -d -p 8000:8000 helm-app
+```shell
+docker build -t helm-web-app .
+docker run -d -p 8000:8000 helm-web-app
+```
+
+### Deploy to Minikube
+
+```
+minikube image load helm-web-app:latest
+```
+
+```shell
+helm install web-app ./helm-chart
+```
+
+(
+undone by 
+```shell
+helm uninstall web-app
+```
+)
+
+```shell
+export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services web-app-helm-chart)
+export NODE_IP=$(kubectl get nodes --namespace default -o jsonpath="{.items[0].status.addresses[0].address}")
+echo http://$NODE_IP:$NODE_PORT
+```

@@ -8,7 +8,7 @@ WORKDIR /src
 RUN pip install poetry
 
 # Copy dependencies
-COPY poetry.toml .
+COPY pyproject.toml .
 COPY poetry.lock .
 
 # Install dependencies using poetry
